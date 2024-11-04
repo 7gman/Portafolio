@@ -1,0 +1,17 @@
+<div id="id01"></div>
+<img src="https://cdn.prod.website-files.com/5e6befb8c88b0e98c69b1333/6054fec86ef332ff3651bc92_1581514013775.png">
+
+<script>
+var xmlhttp = new XMLHttpRequest();
+var url = "http://localhost:30257";
+
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var resp = JSON.parse(this.responseText);
+        document.getElementById("id01").innerHTML = "<h2>La hora es " + resp.time + "y el hostname es " + resp.hostname + "</h2>";
+    }
+};
+xmlhttp.open("GET", url, true);
+xmlhttp.send();
+
+</script>

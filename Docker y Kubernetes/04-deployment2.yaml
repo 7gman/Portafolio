@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapplication1-deployment
+spec:
+  selector:
+    matchLabels:
+      app: webapplication1
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: webapplication1
+    spec:
+      containers:
+      - name: webapplication1
+        image: localhost:5000/webapplication1:latest
+        env:
+        - name: MI_VARIABLE
+          value: "pelado"
+        - name: MI_OTRA_VARIABLE
+          value: "pelade"
+        - name: DD_AGENT_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "200m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        ports:
+        - containerPort: 8080

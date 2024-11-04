@@ -1,0 +1,114 @@
+#Instalación Local de Openshift
+
+
+Intalar el .msi
+
+
+Sin privilegios de administrador:
+
+crc setup
+
+
+
+
+--------------------------------------------------------------------------
+
+
+
+#Iniciar y detener Cluster
+
+Sin privilegios de administrador:
+
+crc start (token)
+crc stop
+
+
+
+
+
+--------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+#Run crc setup to set up your host operating system for the OpenShift Local virtual machine.
+
+
+
+crc setup
+
+
+
+
+
+
+--------------------------------------------------------------------------
+
+
+
+
+
+#Inicia el cluster de OpenShift. Run crc start to create a minimal OpenShift 4 cluster on your computer.
+
+
+crc start
+
+
+
+
+
+
+--------------------------------------------------------------------------
+
+
+
+# oc es el cliente para conectarse al cluster de OpenShift (oc.exe), personalmente en mi caso se ubica en la raíz del disco C:\
+
+
+C:\oc-4.14.10-windows
+
+
+
+
+
+--------------------------------------------------------------------------
+
+
+
+
+
+
+#Información del cluster (cluster ID)
+
+oc get clusterversion --output yaml
+
+oc get clusterversion --output jsonpath={.items[*].spec.clusterID}
+
+
+
+
+
+
+--------------------------------------------------------------------------
+
+
+
+
+
+#Loguearse al OpenShift
+
+oc login -u user1
+
+
+
+
+
+--------------------------------------------------------------------------
+
+
+

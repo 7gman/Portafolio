@@ -1,0 +1,7 @@
+Dar enfoque a:
+
+Azure Cloud
+Docker
+Kubernetes
+Ansible
+*AWS Cloud

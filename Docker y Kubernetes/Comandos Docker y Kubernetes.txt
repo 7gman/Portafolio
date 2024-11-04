@@ -1,0 +1,129 @@
+
+#Loguearse a DockerHub para subir al repositorio alguna imagen
+
+
+
+
+
+Docker login
+
+
+
+
+
+----------------------------------------------------------------------
+
+
+#Subir imagen a registry local
+
+docker tag [nombre-de-imagen] localhost:5000/getting-started
+docker push localhost:5000/getting-started
+
+
+
+
+----------------------------------------------------------------------
+
+
+#Dockerfile para Contenerizar Aplicación Web .net 8.0
+
+
+
+# https://hub.docker.com/_/microsoft-dotnet
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /source
+
+# copy csproj and restore as distinct layers
+COPY *.sln .
+COPY WebApplication1/*.csproj ./WebApplication1/
+RUN dotnet restore
+
+# copy everything else and build app
+COPY WebApplication1/. ./WebApplication1/
+WORKDIR /source/WebApplication1
+RUN dotnet publish -c release -o /app --no-restore
+
+# final stage/image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build /app ./
+
+EXPOSE 8080
+
+ENTRYPOINT ["dotnet", "WebApplication1.dll"]
+
+
+
+-------------------------------------------------------------
+
+
+#Exponer servicio (LoadBalancer) para acceder a la aplicación
+
+kubectl expose deployment webapplication1-deployment --type=LoadBalancer --name=my-service --name=webapplication1-service
+
+
+
+
+----------------------------------------------------------------------
+
+
+
+
+
+#Rango de puertos que se pueden usar en el servicio nodePort
+
+
+nodePort: this is a port in the range of 30000-32767
+
+
+
+
+----------------------------------------------------------------------
+
+
+
+
+
+LoadBalancer: Direcciones externas para exponer a internet
+
+ClusterIP: Direcciones internas del cluster
+NodePort: Direcciones internas del cluster
+
+Ingress: Se utiliza con ClusterIP y NodePort, ejecuta por debajo un Nginx y un loadbalancer
+
+
+
+
+----------------------------------------------------------------------
+
+
+#Configuración de variables para distintos ambientes en los manifiestos
+
+
+
+
+
+
+configmap: Guarda variables para diferentes configuraciones de distintos ambiente
+
+Secrets: Guarda secretos y los cifra en base x64, no es una manera segura ya que los secretos no están encriptados
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------
+
+
+#Tipo de manifiesto que mediante instrucciones crea recursos más fácilmente (uso de manifiestos, modificación de valores en manifiestos o recursos, creación de secretos, configmaps, etc.)
+
+
+
+Kustomize: Permite crear una serie de intrucciones para utilizar manifiestos, crear secretos, etc; además permite cambiar valores de los manifiestos (image: X) o recursos que se crean
+
+
+
+

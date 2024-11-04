@@ -1,0 +1,18 @@
+---
+- name: Prueba con Variables
+  hosts: debian1
+  vars: 
+    - mensaje: "Esto es otro  mensaje de Ansible"
+    - curso: "dentro del curso de Ansible"
+    - desarrollo:
+       tipo: linux
+       memoria: 4GB
+       disco: 500GB
+
+    
+  tasks:
+  - name: Ver variables
+    debug:
+      msg: "los ordenadores de desarrollo son: {{desarrollo}} y su memoria es {{desarrollo.memoria}}"
+
+...

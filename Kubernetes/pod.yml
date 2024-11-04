@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mi-pod2
+  labels:
+    app: mi-app
+spec:
+  containers:
+  - name: mi-contenedor1
+    image: python:3.6-alpine # Imagen de Docker del contenedor
+    command: ['sh', '-c', 'python -m http.server 8081']
+  - name: mi-contenedor2
+    image: python:3.6-alpine # Imagen de Docker del contenedor
+    command: ['sh', '-c', 'python -m http.server 8082']
